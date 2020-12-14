@@ -51,3 +51,5 @@ class Cliente_Servicio:
                         vista_cliente.indicarPinErroneo()
                 else:
                     vista_cliente.indicarMatriculaNoEncontrada()
+        else:
+            vista_cliente.indicarNoHayTickets()

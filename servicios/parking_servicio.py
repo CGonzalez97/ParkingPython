@@ -27,8 +27,11 @@ class Parking_Servicio:
         abonadas_libres_mr = 0
         abonadas_ocupadas_mr = 0
 
+        contador = 0
         for plaza in lista_p:
+            print('Iteracion numero:',contador)
             if(plaza.tipo == 'coche'):
+                print('Entra en condicion coche')
                 if(plaza.abonada):
                     if(plaza.ocupada):
                         abonadas_ocupadas_c += 1
@@ -39,6 +42,7 @@ class Parking_Servicio:
                         ocupadas_c += 1
                     else:
                         libres_c += 1
+                        print('Se incrementa libres_c')
             elif(plaza.tipo == 'moto'):
                 if(plaza.abonada):
                     if(plaza.ocupada):
@@ -50,7 +54,8 @@ class Parking_Servicio:
                         ocupadas_m += 1
                     else:
                         libres_m += 1
-            elif(plaza.tipo == 'movilidadreducida'):
+                        print('Se incrementa libres_m')
+            elif(plaza.tipo == 'pmr'):
                 if(plaza.abonada):
                     if(plaza.ocupada):
                         abonadas_ocupadas_mr += 1
@@ -61,6 +66,8 @@ class Parking_Servicio:
                         ocupadas_mr += 1
                     else:
                         libres_mr += 1
+                        print('Se incrementa libres_mr')
+
 
             lista_claves = ['libres_coche',
                             'ocupadas_coche',

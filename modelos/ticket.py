@@ -1,6 +1,6 @@
 from random import randint
 
-class Ticket:
+class Ticket():
     def __init__(self, vehiculo, plaza, fechaDeposito):
         self.__vehiculo = vehiculo
         self.__plaza = plaza

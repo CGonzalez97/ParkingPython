@@ -11,9 +11,10 @@ class Cliente_Servicio:
                           vista_cliente,
                           ticket_repositorio):
         ticket_resultado = None
-
+        encontrado = False
         for i in parking.plazas:
-            if(not i.abonada and not i.ocupada and i.tipo == vehiculo.tipo):
+            if(not encontrado and not i.abonada and not i.ocupada and i.tipo == vehiculo.tipo):
+                encontrado = True
                 i.ocupada = True
                 ticket_repositorio.lista_tickets.appends(Ticket(vehiculo,
                                                                 i,

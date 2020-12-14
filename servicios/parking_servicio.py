@@ -29,9 +29,7 @@ class Parking_Servicio:
 
         contador = 0
         for plaza in lista_p:
-            print('Iteracion numero:',contador)
             if(plaza.tipo == 'coche'):
-                print('Entra en condicion coche')
                 if(plaza.abonada):
                     if(plaza.ocupada):
                         abonadas_ocupadas_c += 1
@@ -42,7 +40,6 @@ class Parking_Servicio:
                         ocupadas_c += 1
                     else:
                         libres_c += 1
-                        print('Se incrementa libres_c')
             elif(plaza.tipo == 'moto'):
                 if(plaza.abonada):
                     if(plaza.ocupada):
@@ -54,7 +51,6 @@ class Parking_Servicio:
                         ocupadas_m += 1
                     else:
                         libres_m += 1
-                        print('Se incrementa libres_m')
             elif(plaza.tipo == 'pmr'):
                 if(plaza.abonada):
                     if(plaza.ocupada):
@@ -66,10 +62,9 @@ class Parking_Servicio:
                         ocupadas_mr += 1
                     else:
                         libres_mr += 1
-                        print('Se incrementa libres_mr')
 
 
-            lista_claves = ['libres_coche',
+        lista_claves = ['libres_coche',
                             'ocupadas_coche',
                             'abonadas_libres_coche',
                             'abonadas_ocupadas_coche',
@@ -82,7 +77,7 @@ class Parking_Servicio:
                             'abonadas_libres_movilidad_reducida',
                             'abonadas_ocupadas_movilidad_reducida']
 
-            lista_valores = [libres_c,
+        lista_valores = [libres_c,
                              ocupadas_c,
                              abonadas_libres_c,
                              abonadas_ocupadas_c,
@@ -95,7 +90,7 @@ class Parking_Servicio:
                              abonadas_libres_mr,
                              abonadas_ocupadas_mr]
 
-            return dict(zip(lista_claves, lista_valores))
+        return dict(zip(lista_claves, lista_valores))
 
         #-------------------------------------------------------------
 

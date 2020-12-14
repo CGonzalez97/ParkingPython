@@ -27,6 +27,7 @@ class Parking_Servicio:
         abonadas_libres_mr = 0
         abonadas_ocupadas_mr = 0
 
+        contador = 0
         for plaza in lista_p:
             if(plaza.tipo == 'coche'):
                 if(plaza.abonada):
@@ -50,7 +51,7 @@ class Parking_Servicio:
                         ocupadas_m += 1
                     else:
                         libres_m += 1
-            elif(plaza.tipo == 'movilidadreducida'):
+            elif(plaza.tipo == 'pmr'):
                 if(plaza.abonada):
                     if(plaza.ocupada):
                         abonadas_ocupadas_mr += 1
@@ -62,7 +63,8 @@ class Parking_Servicio:
                     else:
                         libres_mr += 1
 
-            lista_claves = ['libres_coche',
+
+        lista_claves = ['libres_coche',
                             'ocupadas_coche',
                             'abonadas_libres_coche',
                             'abonadas_ocupadas_coche',
@@ -75,7 +77,7 @@ class Parking_Servicio:
                             'abonadas_libres_movilidad_reducida',
                             'abonadas_ocupadas_movilidad_reducida']
 
-            lista_valores = [libres_c,
+        lista_valores = [libres_c,
                              ocupadas_c,
                              abonadas_libres_c,
                              abonadas_ocupadas_c,
@@ -88,7 +90,7 @@ class Parking_Servicio:
                              abonadas_libres_mr,
                              abonadas_ocupadas_mr]
 
-            return dict(zip(lista_claves, lista_valores))
+        return dict(zip(lista_claves, lista_valores))
 
         #-------------------------------------------------------------
 

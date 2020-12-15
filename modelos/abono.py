@@ -5,6 +5,7 @@ class Abono:
         self.__fecha_cancelacion = fechaCancelacion
         self.__facturacion = facturacion
         self.__cliente = cliente
+        self.__plaza_ocupada = False
 
     @property
     def plazo(self):
@@ -40,5 +41,12 @@ class Abono:
     @cliente.setter
     def cliente(self, cliente):
         self.__cliente = cliente
+
+    @property
+    def plaza_ocupada(self):
+        return self.__plaza_ocupada
+    @cliente.setter
+    def plaza_ocupada(self, plaza_ocupada):
+        self.__plaza_ocupada = plaza_ocupada
 
     

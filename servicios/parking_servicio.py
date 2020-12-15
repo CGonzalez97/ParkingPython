@@ -1,3 +1,7 @@
+from datetime import datetime
+#pip install dateutil
+#from dateutil.relativedelta import relativedelta
+
 class Parking_Servicio:
     def __init__(self):
         pass
@@ -93,5 +97,44 @@ class Parking_Servicio:
         return dict(zip(lista_claves, lista_valores))
 
         #-------------------------------------------------------------
+
+        #FACTURAR
+
+        def  facturar(vistaParkin, cobro_repositorio, vista_parking):
+            cuantia = 0
+            fecha_inicial = datetime(int(input(vista_parking.pedirAnyoInicial())),#anyo
+                                     int(input(vista_parking.pedirMesInicial())),#mes,
+                                     int(input(vista_parking.pedirDiaInicial())),#dias,
+                                     int(input(vista_parking.pedirHoraInicial())),#horas,
+                                     int(input(vista_parking.pedirMinutosInicial())),#minutos
+                                     0,0)#segundos y milisegundos
+            fecha_final = datetime(int(input(vista_parking.pedirAnyoFinal())),#anyo
+                                     int(input(vista_parking.pedirMesFinal())),#mes,
+                                     int(input(vista_parking.pedirDiaFinal())),#dias,
+                                     int(input(vista_parking.pedirHoraFinal())),#horas,
+                                     int(input(vista_parking.pedirMinutosFinal())),#minutos
+                                     0,0)#segundos y milisegundos
+            for i in cobro_repositorio.lista_cobros:
+                if(i.fecha_salida > fecha_inicial
+                and i.fecha_salida < fecha_final):
+                    cuantia += i.cobro_final
+
+            return cuantia
+
+        #---------------------------------------------------------
+
+        #ABONOS
+
+        #Crear fecha cancelacion
+        #use_date = use_date+relativedelta(months=+1) <- ¿usar?
+        def crear_fecha_cancelacion(fecha_ini, plazo):
+            if(plazo == 'mensual'):
+                dummy1 = None
+            elif(plazo == 'trimestral'):
+                dummy2 = None
+            elif(plazo == 'semestral'):
+                dummy3 = None
+            elif(plazo == 'anual'):
+                dummmy4 = None
 
 

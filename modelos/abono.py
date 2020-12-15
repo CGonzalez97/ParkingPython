@@ -49,4 +49,11 @@ class Abono:
     def plaza_ocupada(self, plaza_ocupada):
         self.__plaza_ocupada = plaza_ocupada
 
+    def mostrar(self):
+        return f"Cliente: {self.cliente.nombre}\n" \
+               f"Plazo: {self.plazo}\n" \
+               f"Fecha de Inicio: {self.fecha_activacion}\n" \
+               f"Fecha de Expiración: {self.fecha_cancelacion}\n" \
+               f"Precio: {self.facturacion}€"
+
     

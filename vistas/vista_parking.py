@@ -94,4 +94,7 @@ class Vista_Parking():
     def mostrarSinCAducidadCercana(self):
         return 'No caduca ninguno próximamente.'
 
+    def  introducir_a_menu_gestor(self):
+        return '-'*11 + '\nMenu Gestor\n' + '-'*11
+
 

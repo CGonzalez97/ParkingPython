@@ -246,7 +246,7 @@ class Parking_Servicio:
                   f'sumando un total de {cuantia}€.')
         else:
             print('No hhay abonos anuales vigentes.')
-    
+
 
 
 

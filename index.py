@@ -10,14 +10,24 @@ from repositorios.cobro_repositorio import Cobro_Repositorio
 from repositorios.ticket_repositorio import Ticket_Repositorio
 from servicios.cliente_servicio import Cliente_Servicio
 from servicios.parking_servicio import Parking_Servicio
+from vistas.vista_parking import Vista_Parking
+from vistas.vista_cliente import Vista_Cliente
+from vistas.vista_general import Vista_General
 import math
 
+#Instanciacion repositorios
 ticket_repositorio = Ticket_Repositorio()
 cobro_repositorio = Cobro_Repositorio()
 abono_repositorio = Abono_Repositorio()
 
+#Instanciacion servicios
 cliente_servicio = Cliente_Servicio()
 parking_servicio = Parking_Servicio()
+
+#Instanciacion vistas
+vista_parking = Vista_Parking()
+vista_cliente = Vista_Cliente()
+vista_general = Vista_General()
 
 #Calculo del numero de plazas de cda tipo
 n_plazas_totales = int(input('¿Cuántas plazas tendrá el parking?'))
@@ -44,6 +54,8 @@ parking = Parking('Parking centro',plazas)
 #     print(i.tipo)
 
 print(parking_servicio.informar_plazas(parking.plazas))
+print('-'*50)
+
 
 
 

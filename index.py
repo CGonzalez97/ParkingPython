@@ -56,6 +56,64 @@ parking = Parking('Parking centro',plazas)
 print(parking_servicio.informar_plazas(parking.plazas))
 print('-'*50)
 
+salir = False
+salir_submenu_cliente = False
+salir_submenu_parking = False
+salir_submenu_abonos = False
+#opcion = None
+
+while not salir:
+    opcion = int(input(vista_general.preguntar_tipo_usuario()))
+    if(opcion == 1):
+        #Menu gestor
+        print(vista_parking.introducir_a_menu_gestor())
+        while not salir_submenu_parking:
+            opcion = int(input(vista_parking.mostrarOpcionesParkin()))
+            if(opcion == 1):
+                print('Estado parking')
+            elif(opcion == 2):
+                print('Facturación')
+            elif(opcion == 3):
+                print('Consulta de abonados')
+            elif(opcion == 4):
+                print('Menu abonos')
+                while not salir_submenu_abonos:
+                    opcion = int(input(vista_parking.mostrarMenuAbonos()))
+                    if(opcion == 1):
+                        print('Mostrar abonos')
+                    elif(opcion == 2):
+                        print('Dar alta a un abono')
+                    elif(opcion == 3):
+                        print('Modificar abono')
+                    elif(opcion == 4):
+                        print('Eliminar abono')
+                    elif(opcion == 5):
+                        print('Mostrar caducan este mes')
+                    elif(opcion == 6):
+                        print('Mostrar caducan diez días')
+                    elif(opcion == 7):
+                        print('Total abonos anuales')
+                    elif(opcion == 0):
+                        print('Salir submenu abonos')
+            elif(opcion == 0):
+                print('Salir menu parking')
+    elif(opcion == 2):
+        #Menu cliente
+        opcion = int(input(vista_cliente.preguntarOpcionCliente()))
+        if(opcion == 1):
+            print('Depositar vehiculo')
+        elif(opcion == 2):
+            print('Retirar vehiculo')
+        elif(opcion == 3):
+            print('Retirar abonados')
+        elif(opcion == 4):
+            print('Retirar abonado')
+        elif(opcion == 0):
+            print('Salir menu cliente')
+    elif(opcion == 0):
+        print('Salir')
+
+
 
 
 

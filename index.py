@@ -70,9 +70,11 @@ while not salir:
         while not salir_submenu_parking:
             opcion = int(input(vista_parking.mostrarOpcionesParkin()))
             if(opcion == 1):
-                print('Estado parking')
+                #print('Estado parking')
+                print(parking_servicio.informar_plazas(parking.plazas))
             elif(opcion == 2):
-                print('Facturación')
+                #print('Facturación')
+                print(parking_servicio.facturar(vista_parking, cobro_repositorio))
             elif(opcion == 3):
                 print('Consulta de abonados')
             elif(opcion == 4):

@@ -206,13 +206,47 @@ class Parking_Servicio:
 
     def mostrar_abonos_caducan_mes(self, lista_abonos,
                                    vista_parking):
+        vista_parking.mostrarMensajesAbonoasACaducarEsteMes()
         ninguno = True
         for i in lista_abonos:
             if(i.fecha_cancelacion.year == datetime.now().year and
             i.fecha_cancelacion.month == datetime.now().month):
-                print('-'+50)
+                print('-'*50)
                 print(i.mostrar())
-                print('-'+50)
+                print('-'*50)
+                if(ninguno):
+                    ninguno = False
+            if(ninguno):
+                vista_parking.mostrarSinCAducidadEsteMes()
+
+    def mostrar_abonos_caducan_diez(self,lista_abonos,vista_parking):
+        vista_parking.mostrarMensajesAbonoasACaducarDiezDias()
+        ninguno = True
+        for i in lista_abonos:
+            if(i.fecha_cancelacion >= datetime.now() and
+            i.fecha_cancelacion < (datetime.now() + timedelta(days=10))):
+                print('-'*50)
+                print(i.mostrar())
+                print('-'*50)
+                if(ninguno):
+                    ninguno = False
+        if(ninguno):
+            vista_parking.mostrarSinCAducidadCercana()
+
+    def calcular_anuales(self, abono_repositorio):
+        contador = 0
+        cuantia = 0
+        for i in abono_repositorio.lista_abonos:
+            if(i.fecha_cancelacion > datetime.now() and
+            i.plazo == 'anual'):
+                contador += 1
+                cuantia += 200
+        if(contador > 0):
+            print(f'Hay en vigor {contador} abonos anuales,'
+                  f'sumando un total de {cuantia}€.')
+        else:
+            print('No hhay abonos anuales vigentes.')
+    
 
 
 

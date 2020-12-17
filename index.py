@@ -102,8 +102,10 @@ while not salir:
                         parking_servicio.calcular_anuales(abono_repositorio)
                     elif(opcion == 0):
                         print('Salir submenu abonos')
+                        salir_submenu_abonos = True
             elif(opcion == 0):
                 print('Salir menu parking')
+                salir_submenu_parking = True
     elif(opcion == 2):
         #Menu cliente
         opcion = int(input(vista_cliente.preguntarOpcionCliente()))
@@ -137,8 +139,10 @@ while not salir:
             cliente_servicio.retirar_abonado(dni,matricula,parking,abono_repositorio)
         elif(opcion == 0):
             print('Salir menu cliente')
+            salir_submenu_cliente = True
     elif(opcion == 0):
         print('Salir')
+        salir = True
 
 
 

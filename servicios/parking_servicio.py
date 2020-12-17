@@ -105,7 +105,7 @@ class Parking_Servicio:
 
     #FACTURAR
 
-    def  facturar(self,vistaParkin, cobro_repositorio, vista_parking):
+    def  facturar(self,vista_parking, cobro_repositorio):
         cuantia = 0
         fecha_inicial = datetime(int(input(vista_parking.pedirAnyoInicial())),#anyo
                                  int(input(vista_parking.pedirMesInicial())),#mes,
@@ -173,17 +173,19 @@ class Parking_Servicio:
         if(plaza_encontrada):
             auxiliar_borrar_libre = False
             plazo = input(vista_parkin.pedirPlazo())
+            matricula = input(vista_parkin.pedirMatricula())
             fecha_ini = datetime.now()
             fecha_can = self.crear_fecha_cancelacion(fecha_ini, plazo)
             facturacion = self.facturacion_abono_concreto(plazo)
             vehiculo_abonado = None
             if(tipo_v == 'coche'):
-                vehiculo_abonado = Coche(None)
+                vehiculo_abonado = Coche(matricula)
             elif(tipo_v == 'moto'):
-                vehiculo_abonado = Moto(None)
+                vehiculo_abonado = Moto(matricula)
             elif(tipo_v == 'vehiculo_pmr'):#puede haver conflicto con el string vehiculo_pmr
-                vehiculo_abonado = Vehiculo_pmr(None)
+                vehiculo_abonado = Vehiculo_pmr(matricula)
             cliente_a_abonar = Cliente(
+                input(vista_parkin.pedirDni()),
                 input(vista_parkin.pedirNombre()),
                 input(vista_parkin.pedirNTarjeta()),
                 vehiculo_abonado

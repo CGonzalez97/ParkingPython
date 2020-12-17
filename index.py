@@ -82,19 +82,24 @@ while not salir:
                 while not salir_submenu_abonos:
                     opcion = int(input(vista_parking.mostrarMenuAbonos()))
                     if(opcion == 1):
-                        print('Mostrar abonos')
+                        #print('Mostrar abonos')
+                        parking_servicio.mostrar_abonos(abono_repositorio.lista_abonos)
                     elif(opcion == 2):
                         print('Dar alta a un abono')
+                        parking_servicio.dar_alta_abono(parking, vista_parking, abono_repositorio)
                     elif(opcion == 3):
                         print('Modificar abono')
                     elif(opcion == 4):
                         print('Eliminar abono')
                     elif(opcion == 5):
-                        print('Mostrar caducan este mes')
+                        #print('Mostrar caducan este mes')
+                        parking_servicio.mostrar_abonos_caducan_mes(abono_repositorio.lista_abonos,vista_parking)
                     elif(opcion == 6):
-                        print('Mostrar caducan diez días')
+                        #print('Mostrar caducan diez días')
+                        parking_servicio.mostrar_abonos_caducan_diez(abono_repositorio.lista_abonos,vista_parking)
                     elif(opcion == 7):
                         print('Total abonos anuales')
+                        parking_servicio.calcular_anuales(abono_repositorio)
                     elif(opcion == 0):
                         print('Salir submenu abonos')
             elif(opcion == 0):
@@ -104,12 +109,32 @@ while not salir:
         opcion = int(input(vista_cliente.preguntarOpcionCliente()))
         if(opcion == 1):
             print('Depositar vehiculo')
+            tipo_v = input(vista_cliente.pedirTipoVehiculoDepositar())
+            matricula = input(vista_cliente.pedirMatriculaDepositar())
+            vehiculo = None
+            if(tipo_v == 'coche'):
+                vehiculo = Coche(matricula)
+            elif(tipo_v == 'moto'):
+                vehiculo = Moto(matricula)
+            elif(tipo_v == 'vehiculo_pmr'):
+                vehiculo = Vehiculo_pmr(matricula)
+            cliente_servicio.depositarVehiculo(vehiculo, parking, vista_cliente, ticket_repositorio)
         elif(opcion == 2):
             print('Retirar vehiculo')
+            matricula = input(vista_cliente.pedirMatriculaRetirarVehiculo())
+            pin = input(vista_cliente.pedirPinRetirarVehiculo())
+            cliente_servicio.retirarVehiculo(matricula,pin,ticket_repositorio,
+                                             vista_cliente,parking,cobro_repositorio)
         elif(opcion == 3):
-            print('Retirar abonados')
+            print('Depositar abonados')
+            dni = input(vista_cliente.pedirDni())
+            matricula = input(vista_cliente.pedirMatricula())
+            cliente_servicio.depositar_abonado(dni,matricula,parking,abono_repositorio)
         elif(opcion == 4):
             print('Retirar abonado')
+            dni = input(vista_cliente.pedirDni())
+            matricula = input (vista_cliente.pedirMatriculaRetirarVehiculo())
+            cliente_servicio.retirar_abonado(dni,matricula,parking,abono_repositorio)
         elif(opcion == 0):
             print('Salir menu cliente')
     elif(opcion == 0):

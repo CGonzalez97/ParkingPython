@@ -51,6 +51,7 @@ class Abono:
 
     def mostrar(self):
         return f"Cliente: {self.cliente.nombre}\n" \
+               f'Matricula: {self.cliente.vehiculo.matricula}\n'\
                f"Plazo: {self.plazo}\n" \
                f"Fecha de Inicio: {self.fecha_activacion}\n" \
                f"Fecha de Expiración: {self.fecha_cancelacion}\n" \

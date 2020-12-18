@@ -184,13 +184,10 @@ class Parking_Servicio:
                 vehiculo_abonado = Moto(matricula)
             elif(tipo_v == 'vehiculo_pmr'):#puede haver conflicto con el string vehiculo_pmr
                 vehiculo_abonado = Vehiculo_pmr(matricula)
-            cliente_a_abonar = Cliente(
-                input(vista_parkin.pedirDni()),
-                input(vista_parkin.pedirNombre()),
-                input(vista_parkin.pedirNTarjeta()),
-                vehiculo_abonado
-            )
-            cliente_a_abonar.vehiculo.matricula = input(vista_parkin.pedirMatricula())
+            dni = input(vista_parkin.pedirDni())
+            nombre = input(vista_parkin.pedirNombre())
+            n_tarjeta = input(vista_parkin.pedirNTarjeta())
+            cliente_a_abonar = Cliente(dni,nombre,n_tarjeta,vehiculo_abonado)
             abono_repositorio.lista_abonos.append(Abono(
                 plazo, fecha_ini, fecha_can, facturacion, cliente_a_abonar
             ))

@@ -215,8 +215,8 @@ class Parking_Servicio:
                 print('-'*50)
                 if(ninguno):
                     ninguno = False
-            if(ninguno):
-                vista_parking.mostrarSinCAducidadEsteMes()
+        if(ninguno):
+            print(vista_parking.mostrarSinCAducidadEsteMes())
 
     def mostrar_abonos_caducan_diez(self,lista_abonos,vista_parking):
         vista_parking.mostrarMensajesAbonoasACaducarDiezDias()
@@ -230,7 +230,7 @@ class Parking_Servicio:
                 if(ninguno):
                     ninguno = False
         if(ninguno):
-            vista_parking.mostrarSinCAducidadCercana()
+            print(vista_parking.mostrarSinCAducidadCercana())
 
     def calcular_anuales(self, abono_repositorio):
         contador = 0

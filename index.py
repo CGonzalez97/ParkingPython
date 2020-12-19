@@ -154,7 +154,7 @@ while not salir:
             print('-'*50)
             print('Retirar vehiculo')
             matricula = input(vista_cliente.pedirMatriculaRetirarVehiculo())
-            pin = input(vista_cliente.pedirPinRetirarVehiculo())
+            pin = int(input(vista_cliente.pedirPinRetirarVehiculo()))
             cliente_servicio.retirarVehiculo(matricula,pin,ticket_repositorio,
                                              vista_cliente,parking,cobro_repositorio)
             print('-'*50)

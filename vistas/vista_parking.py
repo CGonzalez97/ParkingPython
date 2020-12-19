@@ -100,4 +100,17 @@ class Vista_Parking():
     def  pedir_matricula_abono_eliminar(self):
         return 'Introduzca el dni del cliente a eliminar.'
 
+    def  pedir_matricula_abono_actualizar(self):
+        return 'Introduzca el dni del abono a actualizar.'
+
+    def introducir_modificar_abono(self):
+        return '1.Cambiar datos.\n2.Renovar'
+
+    def introducir_nombre_modificar(self):
+        return 'Introduzca nuevo nombre, para mantener el actual:M'
+    def introducir_dni_modificar(self):
+        return 'Introduzca nuevo dni, para mantener el actual:M'
+    def introducir_matricula_modificar(self):
+        return 'Introduzca nueva matricula, para mantener la actual:M'
+
 

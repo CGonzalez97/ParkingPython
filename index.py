@@ -106,6 +106,15 @@ while not salir:
                     elif(opcion == 3):
                         print('-'*50)
                         print('Modificar abono')
+                        dni_abono_a_modificar = input(vista_parking.pedir_matricula_abono_actualizar())
+                        opcion_modificar = int(input(vista_parking.introducir_modificar_abono()))
+                        if(opcion_modificar == 1):
+                            nombre_nuevo = input(vista_parking.introducir_nombre_modificar())
+                            dni_nuevo = input(vista_parking.introducir_dni_modificar())
+                            matricula_nueva = input(vista_parking.introducir_matricula_modificar())
+                            parking_servicio.modificar_abono(dni_abono_a_modificar,nombre_nuevo, dni_nuevo, matricula_nueva, abono_repositorio.lista_abonos)
+                        elif(opcion_modificar == 2):
+                            parking_servicio.renovar_abono(abono_repositorio.lista_abonos,dni_abono_a_modificar)
                         print('-'*50)
                     elif(opcion == 4):
                         print('-'*50)

@@ -268,6 +268,40 @@ class Parking_Servicio:
                 i.cliente.nombre = 'nombre de cliente eliminado'
                 encontrado = True
                 print('Eliminacion con éxito.')
+        if(not encontrado):
+            print('No hay ningun abonado con ese dni')
+
+    def modificar_abono(self, dni, nombre_n, dni_n, matricula_n, lista_abonos):
+        encontrado = False
+        for i in lista_abonos:
+            if(not encontrado and i.cliente.dni == dni):
+                if(not dni_n == 'M'):
+                    i.cliente.dni = dni_n
+                if(not nombre_n == 'M'):
+                    i.cliente.nombre = nombre_n
+                if(not matricula_n == 'M'):
+                    i.cliente.vehiculo.matricula = matricula_n
+                encontrado = True
+                print('Eliminacion con éxito.')
+        if(not encontrado):
+            print('No hay ningun abonado con ese dni')
+
+    def renovar_abono(self, lista_abonos, dni):
+        encontrado = False
+        for i in lista_abonos:
+            if(not encontrado and i.cliente.dni == dni):
+                if(i.plazo == 'mensual'):
+                    i.fecha_cancelacion += timedelta(days=30)
+                elif(i.plazo == 'trimestral'):
+                    i.fecha_cancelacion += timedelta(days=90)
+                elif(i.plazo == 'semestral'):
+                    i.fecha_cancelacion += timedelta(days=180)
+                elif(i.plazo == 'anual'):
+                    i.fecha_cancelacion += timedelta(days=360)
+                encontrado = True
+                print('Renovado con éxito.')
+
+
 
 
 

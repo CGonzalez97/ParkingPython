@@ -107,6 +107,8 @@ class Parking_Servicio:
 
     def  facturar(self,vista_parking, cobro_repositorio):
         cuantia = 0
+        if(len(cobro_repositorio.lista_cobros) <= 0):
+            print('No hay cobros')
         fecha_inicial = datetime(int(input(vista_parking.pedirAnyoInicial())),#anyo
                                  int(input(vista_parking.pedirMesInicial())),#mes,
                                  int(input(vista_parking.pedirDiaInicial())),#dias,
@@ -120,6 +122,7 @@ class Parking_Servicio:
                                  int(input(vista_parking.pedirMinutosFinal())),#minutos
                                  0,0)#segundos y milisegundos
         for i in cobro_repositorio.lista_cobros:
+            print('Cobro:',i.cobro_final, i.fecha_salida)
             if(i.fecha_salida > fecha_inicial
             and i.fecha_salida < fecha_final):
                 cuantia += i.cobro_final

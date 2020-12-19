@@ -78,7 +78,7 @@ class Vista_Parking():
         return 'Inserte el tipo de vehiculo, ' \
                'coche, ' \
                'moto, ' \
-               'vehiculo_pmr'
+               'pmr'
 
     #Caducan este mes
     def mostrarMensajesAbonoasACaducarEsteMes(self):
@@ -96,5 +96,21 @@ class Vista_Parking():
 
     def  introducir_a_menu_gestor(self):
         return '-'*11 + '\nMenu Gestor\n' + '-'*11
+
+    def  pedir_matricula_abono_eliminar(self):
+        return 'Introduzca el dni del cliente a eliminar.'
+
+    def  pedir_matricula_abono_actualizar(self):
+        return 'Introduzca el dni del abono a actualizar.'
+
+    def introducir_modificar_abono(self):
+        return '1.Cambiar datos.\n2.Renovar'
+
+    def introducir_nombre_modificar(self):
+        return 'Introduzca nuevo nombre, para mantener el actual:M'
+    def introducir_dni_modificar(self):
+        return 'Introduzca nuevo dni, para mantener el actual:M'
+    def introducir_matricula_modificar(self):
+        return 'Introduzca nueva matricula, para mantener la actual:M'
 
 

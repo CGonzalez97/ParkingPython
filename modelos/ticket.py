@@ -22,9 +22,9 @@ class Ticket():
         self.__plaza = plaza
 
     @property
-    def fechaDeposito(self):
-        return self.__fechaDeposito
-    @fechaDeposito.setter
+    def fecha_deposito(self):
+        return self.__fecha_deposito
+    @fecha_deposito.setter
     def fechaDeposito(self, fechaDeposito):
         self.__fechaDeposito = fechaDeposito
 
@@ -37,3 +37,11 @@ class Ticket():
 
     def generar_pin(self):
         return randint(0,999999)
+
+    def __str__(self):
+        return f'\nTICKET\n' \
+               f'Matricula del vehiculo: {self.vehiculo.matricula}\n'\
+               f'Plaza: {self.plaza.id} , tipo: {self.plaza.tipo}\n' \
+               f'Fecha de depósito: {self.fecha_deposito}\n' \
+               f'PIN: {self.pin}\n'
+

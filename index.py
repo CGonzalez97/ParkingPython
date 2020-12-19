@@ -163,7 +163,7 @@ while not salir:
             print('Depositar abonados')
             dni = input(vista_cliente.pedirDni())
             matricula = input(vista_cliente.pedirMatricula())
-            cliente_servicio.depositar_abonado(dni,matricula,parking,abono_repositorio)
+            cliente_servicio.depositar_abonado(dni, matricula,parking,abono_repositorio)
             print('-'*50)
         elif(opcion == 4):
             print('-'*50)

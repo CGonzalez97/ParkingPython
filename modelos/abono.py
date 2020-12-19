@@ -45,7 +45,7 @@ class Abono:
     @property
     def plaza_ocupada(self):
         return self.__plaza_ocupada
-    @cliente.setter
+    @plaza_ocupada.setter
     def plaza_ocupada(self, plaza_ocupada):
         self.__plaza_ocupada = plaza_ocupada
 
@@ -56,6 +56,7 @@ class Abono:
                f"Plazo: {self.plazo}\n" \
                f"Fecha de Inicio: {self.fecha_activacion}\n" \
                f"Fecha de Expiración: {self.fecha_cancelacion}\n" \
-               f"Precio: {self.facturacion}€"
+               f"Precio: {self.facturacion}€\n" \
+               f"Ocupada: {self.plaza_ocupada}"
 
     

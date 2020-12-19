@@ -97,4 +97,7 @@ class Vista_Parking():
     def  introducir_a_menu_gestor(self):
         return '-'*11 + '\nMenu Gestor\n' + '-'*11
 
+    def  pedir_matricula_abono_eliminar(self):
+        return 'Introduzca el dni del cliente a eliminar.'
+
 

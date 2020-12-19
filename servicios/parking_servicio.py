@@ -258,6 +258,18 @@ class Parking_Servicio:
                 print(i.mostrar())
                 print('-'*50)
 
+    #Eliminar abono
+    def eliminar_datos_abonado(self, dni, lista_abonos):
+        encontrado = False
+        for i in lista_abonos:
+            if(not encontrado and i.cliente.dni == dni):
+                i.cliente.vehiculo.matricula = 'Matricula de cliente eliminado'
+                i.cliente.dni = 'Dni de cliente eliminado'
+                i.cliente.nombre = 'nombre de cliente eliminado'
+                encontrado = True
+                print('Eliminacion con éxito.')
+
+
 
 
 

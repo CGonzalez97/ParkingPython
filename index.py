@@ -110,6 +110,8 @@ while not salir:
                     elif(opcion == 4):
                         print('-'*50)
                         print('Eliminar abono')
+                        dni_eliminacion = input(vista_parking.pedir_matricula_abono_eliminar())
+                        parking_servicio.eliminar_datos_abonado(dni_eliminacion,abono_repositorio.lista_abonos)
                         print('-'*50)
                     elif(opcion == 5):
                         #print('Mostrar caducan este mes')

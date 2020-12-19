@@ -3,7 +3,7 @@ import pickle
 class Cobro_Repositorio:
     def __init__(self):
         self.__lista_cobros = []
-        self.__directorio = '../persistencia/cobros.pckl'
+        self.__directorio = './persistencia/cobros.pckl'
 
     @property
     def lista_cobros(self):
@@ -21,5 +21,10 @@ class Cobro_Repositorio:
     def guardar(self):
         fichero = open(self.directorio,'wb')
         pickle.dump(self.lista_cobros,fichero)
+        fichero.close()
+
+    def cargar(self):
+        fichero = open(self.directorio,'rb')
+        self.lista_cobros = pickle.load(fichero)
         fichero.close()
 

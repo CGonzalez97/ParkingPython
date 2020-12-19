@@ -20,6 +20,19 @@ ticket_repositorio = Ticket_Repositorio()
 cobro_repositorio = Cobro_Repositorio()
 abono_repositorio = Abono_Repositorio()
 
+try:
+    ticket_repositorio.cargar()
+except EOFError:
+    print('No hay tickets en DB.')
+try:
+    abono_repositorio.cargar()
+except EOFError:
+    print('No hay abonos en DB.')
+try:
+    cobro_repositorio.cargar()
+except EOFError:
+    print('No hay cobros en DB.')
+
 #Instanciacion servicios
 cliente_servicio = Cliente_Servicio()
 parking_servicio = Parking_Servicio()
@@ -112,15 +125,15 @@ while not salir:
                             nombre_nuevo = input(vista_parking.introducir_nombre_modificar())
                             dni_nuevo = input(vista_parking.introducir_dni_modificar())
                             matricula_nueva = input(vista_parking.introducir_matricula_modificar())
-                            parking_servicio.modificar_abono(dni_abono_a_modificar,nombre_nuevo, dni_nuevo, matricula_nueva, abono_repositorio.lista_abonos)
+                            parking_servicio.modificar_abono(dni_abono_a_modificar,nombre_nuevo, dni_nuevo, matricula_nueva, abono_repositorio)
                         elif(opcion_modificar == 2):
-                            parking_servicio.renovar_abono(abono_repositorio.lista_abonos,dni_abono_a_modificar)
+                            parking_servicio.renovar_abono(abono_repositorio,dni_abono_a_modificar)
                         print('-'*50)
                     elif(opcion == 4):
                         print('-'*50)
                         print('Eliminar abono')
                         dni_eliminacion = input(vista_parking.pedir_matricula_abono_eliminar())
-                        parking_servicio.eliminar_datos_abonado(dni_eliminacion,abono_repositorio.lista_abonos)
+                        parking_servicio.eliminar_datos_abonado(dni_eliminacion,abono_repositorio)
                         print('-'*50)
                     elif(opcion == 5):
                         #print('Mostrar caducan este mes')

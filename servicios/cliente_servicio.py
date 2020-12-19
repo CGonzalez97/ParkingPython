@@ -26,6 +26,7 @@ class Cliente_Servicio:
                     i.ocupada = True
                     ticket_creado = Ticket(vehiculo, i, datetime.now())
                     ticket_repositorio.lista_tickets.append(ticket_creado)
+                    ticket_repositorio.guardar()
                     print(vista_cliente.plazaEncontrada())
                     print(ticket_creado)
         if (not encontrado):
@@ -63,6 +64,7 @@ class Cliente_Servicio:
                         #                                             i))
                         #print('cobro a introducir:',cobro_a_introducir.cobro_final,cobro_a_introducir.fecha_salida)
                         cobro_repositorio.lista_cobros.append(cobro_a_introducir)
+                        cobro_repositorio.guardar()#--------------------PICKLE
                         print(vista_cliente.confirmarRetiradaDeVehiculo())
                     else:
                         print(vista_cliente.indicarPinErroneo())
@@ -114,6 +116,7 @@ class Cliente_Servicio:
             print('No hay abono con esos datos')
         elif(not plaza_encontrada):
             print('No hay plaza que coincida con su abono')
+        abono_repositorio.guardar()
     def retirar_abonado(self,
                         dni,
                         matricula,
@@ -135,3 +138,4 @@ class Cliente_Servicio:
                         plaza_encontrada = True
                         j.ocupada = False
                         i.plaza_ocupada = False
+        abono_repositorio.guardar()

@@ -201,6 +201,7 @@ class Parking_Servicio:
                 i.tipo == tipo_v):
                     i.abonada = True
                     auxiliar_borrar_libre = True
+        abono_repositorio.guardar()
 
     def  mostrar_abonos(self, lista_abonos):
         for i in lista_abonos:
@@ -259,9 +260,9 @@ class Parking_Servicio:
                 print('-'*50)
 
     #Eliminar abono
-    def eliminar_datos_abonado(self, dni, lista_abonos):
+    def eliminar_datos_abonado(self, dni, abono_repositorio):
         encontrado = False
-        for i in lista_abonos:
+        for i in abono_repositorio.lista_abonos:
             if(not encontrado and i.cliente.dni == dni):
                 i.cliente.vehiculo.matricula = 'Matricula de cliente eliminado'
                 i.cliente.dni = 'Dni de cliente eliminado'
@@ -270,10 +271,11 @@ class Parking_Servicio:
                 print('Eliminacion con éxito.')
         if(not encontrado):
             print('No hay ningun abonado con ese dni')
+        abono_repositorio.guardar()
 
-    def modificar_abono(self, dni, nombre_n, dni_n, matricula_n, lista_abonos):
+    def modificar_abono(self, dni, nombre_n, dni_n, matricula_n, abono_repositorio):
         encontrado = False
-        for i in lista_abonos:
+        for i in abono_repositorio.lista_abonos:
             if(not encontrado and i.cliente.dni == dni):
                 if(not dni_n == 'M'):
                     i.cliente.dni = dni_n
@@ -285,10 +287,11 @@ class Parking_Servicio:
                 print('Eliminacion con éxito.')
         if(not encontrado):
             print('No hay ningun abonado con ese dni')
+        abono_repositorio.guardar()
 
-    def renovar_abono(self, lista_abonos, dni):
+    def renovar_abono(self, abono_repositorio, dni):
         encontrado = False
-        for i in lista_abonos:
+        for i in abono_repositorio.lista_abonos:
             if(not encontrado and i.cliente.dni == dni):
                 if(i.plazo == 'mensual'):
                     i.fecha_cancelacion += timedelta(days=30)
@@ -300,6 +303,7 @@ class Parking_Servicio:
                     i.fecha_cancelacion += timedelta(days=360)
                 encontrado = True
                 print('Renovado con éxito.')
+        abono_repositorio.guardar()
 
 
 

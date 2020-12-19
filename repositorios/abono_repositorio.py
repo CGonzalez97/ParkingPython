@@ -3,7 +3,7 @@ import pickle
 class Abono_Repositorio():
     def __init__(self):
         self.__lista_abonos = []
-        self.__directorio = '../persistencia/abono.pckl'
+        self.__directorio = './persistencia/abono.pckl'
         #self.__fichero = None
 
     @property
@@ -22,4 +22,9 @@ class Abono_Repositorio():
     def guardar(self):
         fichero = open(self.directorio,'wb')
         pickle.dump(self.lista_abonos,fichero)
+        fichero.close()
+
+    def cargar(self):
+        fichero = open(self.directorio,'rb')
+        self.lista_abonos = pickle.load(fichero)
         fichero.close()

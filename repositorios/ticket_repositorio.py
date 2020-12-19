@@ -3,7 +3,7 @@ import pickle
 class Ticket_Repositorio:
     def __init__(self):
         self.__lista_tickets = []
-        self.__directorio = '../persistencia/tickets.pckl'
+        self.__directorio = './persistencia/tickets.pckl'
 
     @property
     def lista_tickets(self):
@@ -21,6 +21,11 @@ class Ticket_Repositorio:
     def guardar(self):
         fichero = open(self.directorio,'wb')
         pickle.dump(self.lista_tickets,fichero)
+        fichero.close()
+
+    def cargar(self):
+        fichero = open(self.directorio,'rb')
+        self.lista_tickets = pickle.load(fichero)
         fichero.close()
 
 

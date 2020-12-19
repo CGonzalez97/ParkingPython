@@ -169,7 +169,7 @@ class Parking_Servicio:
         elif(tipo_v == 'moto'):
             if(lista_plazas.get('libres_moto') > 0):
                 plaza_encontrada = True
-        elif(tipo_v == 'vehiculo_pmr'):#puede haver conflicto con el string vehiculo_pmr
+        elif(tipo_v == 'pmr'):#puede haver conflicto con el string vehiculo_pmr
             if(lista_plazas.get('libres_movilidad_reducida') > 0):
                 plaza_encontrada = True
 
@@ -185,7 +185,7 @@ class Parking_Servicio:
                 vehiculo_abonado = Coche(matricula)
             elif(tipo_v == 'moto'):
                 vehiculo_abonado = Moto(matricula)
-            elif(tipo_v == 'vehiculo_pmr'):#puede haver conflicto con el string vehiculo_pmr
+            elif(tipo_v == 'pmr'):#puede haver conflicto con el string vehiculo_pmr
                 vehiculo_abonado = Vehiculo_pmr(matricula)
             dni = input(vista_parkin.pedirDni())
             nombre = input(vista_parkin.pedirNombre())
@@ -248,6 +248,15 @@ class Parking_Servicio:
                   f'sumando un total de {cuantia}€.')
         else:
             print('No hhay abonos anuales vigentes.')
+
+    #Consultar abonados
+    def consultar_abonados(self, lista_abonos):
+        for i in lista_abonos:
+            print(type(i))
+            if(i.plazo == 'anual'):
+                print('-'*50)
+                print(i.mostrar())
+                print('-'*50)
 
 
 

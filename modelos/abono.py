@@ -1,3 +1,6 @@
+from modelos.vehiculo import Coche, Moto, Vehiculo_pmr
+
+
 class Abono:
     def __init__(self, plazo, fechaActivacion, fechaCancelacion, facturacion, cliente):
         self.__plazo = plazo
@@ -50,13 +53,22 @@ class Abono:
         self.__plaza_ocupada = plaza_ocupada
 
     def mostrar(self):
+        tipo = None
+        if(isinstance(self.cliente.vehiculo,Coche)):
+            tipo = 'Coche'
+        elif(isinstance(self.cliente.vehiculo,Moto)):
+            tipo = 'Moto'
+        elif(isinstance(self.cliente.vehiculo,Vehiculo_pmr)):
+            tipo = 'Vehiculo_pmr'
         return f"Cliente: {self.cliente.nombre}\n" \
                f"DNI: {self.cliente.dni}\n" \
+               f'Tipo: {tipo}\n'\
                f'Matricula: {self.cliente.vehiculo.matricula}\n'\
                f"Plazo: {self.plazo}\n" \
                f"Fecha de Inicio: {self.fecha_activacion}\n" \
                f"Fecha de Expiración: {self.fecha_cancelacion}\n" \
                f"Precio: {self.facturacion}€\n" \
-               f"Ocupada: {self.plaza_ocupada}"
+               f"Ocupada: {self.plaza_ocupada}\n"
+                #f'Matricula: {self.cliente.vehiculo.matricula}\n'\
 
     

@@ -17,16 +17,14 @@ class Cliente_Servicio:
         ticket_resultado = None
         encontrado = False
         for i in parking.plazas:
-            if (not encontrado and not i.abonada and not i.ocupada):  # i.tipo == vehiculo.tipo):
-                if ((i.tipo == 'coche' and isinstance(vehiculo, Coche)) or (
-                        i.tipo == 'moto' and isinstance(vehiculo, Moto)) or
+            if (not encontrado and not i.abonada and not i.ocupada):
+                if ((i.tipo == 'coche' and isinstance(vehiculo, Coche)) or
+                        (i.tipo == 'moto' and isinstance(vehiculo, Moto)) or
                         (i.tipo == 'pmr' and isinstance(vehiculo, Vehiculo_pmr))):
+                    print('Entra en la condicion')
                     encontrado = True
                     i.ocupada = True
                     ticket_creado = Ticket(vehiculo, i, datetime.now())
-                    # ticket_repositorio.lista_tickets.append(Ticket(vehiculo,
-                    #                                             i,
-                    #                                             datetime.now()))
                     ticket_repositorio.lista_tickets.append(ticket_creado)
                     print(vista_cliente.plazaEncontrada())
                     print(ticket_creado)
@@ -59,11 +57,11 @@ class Cliente_Servicio:
                         tiempo_a_cobrar = abs((datetime.now() - i.fechaDeposito).total_seconds()/60)
                         cuantia_cobro = i.vehiculo.tarifa * tiempo_a_cobrar
                         cobro_a_introducir = Cobro(datetime.now(),cuantia_cobro,i)
-                        print('Cuantia del cobro:',cuantia_cobro,'tiempo a cobrar:',tiempo_a_cobrar,'tarifa_v:',i.vehiculo.tarifa,'operacion:',(cuantia_cobro*i.vehiculo.tarifa))
+                        #print('Cuantia del cobro:',cuantia_cobro,'tiempo a cobrar:',tiempo_a_cobrar,'tarifa_v:',i.vehiculo.tarifa,'operacion:',(cuantia_cobro*i.vehiculo.tarifa))
                         # cobro_repositorio.lista_cobros.append(Cobro(datetime.now(),
                         #                                             cuantia_cobro,  # i.vehiculo.tarifa,
                         #                                             i))
-                        print('cobro a introducir:',cobro_a_introducir.cobro_final,cobro_a_introducir.fecha_salida)
+                        #print('cobro a introducir:',cobro_a_introducir.cobro_final,cobro_a_introducir.fecha_salida)
                         cobro_repositorio.lista_cobros.append(cobro_a_introducir)
                         print(vista_cliente.confirmarRetiradaDeVehiculo())
                     else:

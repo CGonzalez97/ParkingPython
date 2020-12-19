@@ -79,11 +79,13 @@ while not salir:
             elif(opcion == 2):
                 #print('Facturación')
                 print('-'*50)
-                print(parking_servicio.facturar(vista_parking, cobro_repositorio))
+                #print(parking_servicio.facturar(vista_parking, cobro_repositorio),'€')
+                print("{0:.2f}€".format(parking_servicio.facturar(vista_parking, cobro_repositorio)))
                 print('-'*50)
             elif(opcion == 3):
                 print('-'*50)
                 print('Consulta de abonados')
+                parking_servicio.consultar_abonados(abono_repositorio.lista_abonos)
                 print('-'*50)
             elif(opcion == 4):
                 salir_submenu_abonos = False
@@ -146,7 +148,7 @@ while not salir:
                 vehiculo = Coche(matricula)
             elif(tipo_v == 'moto'):
                 vehiculo = Moto(matricula)
-            elif(tipo_v == 'vehiculo_pmr'):
+            elif(tipo_v == 'pmr'):
                 vehiculo = Vehiculo_pmr(matricula)
             cliente_servicio.depositarVehiculo(vehiculo, parking, vista_cliente, ticket_repositorio)
             print('-'*50)

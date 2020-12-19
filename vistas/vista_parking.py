@@ -78,7 +78,7 @@ class Vista_Parking():
         return 'Inserte el tipo de vehiculo, ' \
                'coche, ' \
                'moto, ' \
-               'vehiculo_pmr'
+               'pmr'
 
     #Caducan este mes
     def mostrarMensajesAbonoasACaducarEsteMes(self):

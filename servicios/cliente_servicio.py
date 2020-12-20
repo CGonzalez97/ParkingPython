@@ -1,7 +1,13 @@
 from modelos.ticket import Ticket
 from modelos.cobro import Cobro
 from datetime import datetime
-
+from excepciones.Matricula_Erronea import Matricula_Erronea
+from excepciones.Plaza_no_encontrada import Plaza_no_encontrada
+from excepciones.No_Ticket import No_Ticket
+from excepciones.Pin_Erroneo import Pin_Erroneo
+from excepciones.No_Abono_Especificado import No_Abono_Especificado
+from excepciones.No_Plaza_Abono_Especificado import No_Plaza_Abono_Especificado
+from excepciones.No_Plaza_Abonada_Ocupada_Con_Dni_Especificado import No_Plaza_Abonada_Ocupada_Con_Dni_Especificado
 from modelos.vehiculo import Coche, Moto, Vehiculo_pmr
 
 
@@ -30,7 +36,8 @@ class Cliente_Servicio:
                     print(vista_cliente.plazaEncontrada())
                     print(ticket_creado)
         if (not encontrado):
-            print(vista_cliente.plazaNoEncontrada())
+            #print(vista_cliente.plazaNoEncontrada())
+            raise Plaza_no_encontrada
 
     def retirarVehiculo(self,
                         matricula,
@@ -67,11 +74,14 @@ class Cliente_Servicio:
                         cobro_repositorio.guardar()#--------------------PICKLE
                         print(vista_cliente.confirmarRetiradaDeVehiculo())
                     else:
-                        print(vista_cliente.indicarPinErroneo())
+                        #print(vista_cliente.indicarPinErroneo())
+                        raise Pin_Erroneo
                 else:
-                    print(vista_cliente.indicarMatriculaNoEncontrada())
+                    #print(vista_cliente.indicarMatriculaNoEncontrada())
+                    raise Matricula_Erronea
         else:
-            print(vista_cliente.indicarNoHayTickets())
+            #print(vista_cliente.indicarNoHayTickets())
+            raise No_Ticket
 
     def depositar_abonado(self,
                           dni,
@@ -81,45 +91,37 @@ class Cliente_Servicio:
         print('Entra a depositar abonado')
         abono_entontrado = False
         plaza_encontrada = False
-        if (len(abono_repositorio.lista_abonos) <= 0):
-            print('No hay abonos')
+        # if (len(abono_repositorio.lista_abonos) <= 0):
+        #     print('No hay abonos')
         for i in abono_repositorio.lista_abonos:
-            # print(i.mostrar())
-            # print(f'dni pasado {dni}, dni abono {i.cliente.dni}, matricula pasada {matricula}, matricula abono {i.cliente.vehiculo.matricula}')
-            # print(not abono_entontrado and i.cliente.dni == dni and i.cliente.vehiculo.matricula == matricula and not i.plaza_ocupada)
-            # print(not abono_entontrado)
-            # print(i.cliente.dni == dni)
-            # print(i.cliente.vehiculo.matricula == matricula)
-            # print(not i.plaza_ocupada)
             if (not abono_entontrado and
                     i.cliente.dni == dni and
                     i.cliente.vehiculo.matricula == matricula and
                     not i.plaza_ocupada):
-                print('Ha encontrado abono con esos DNI y  matricula')
+                #print('Ha encontrado abono con esos DNI y  matricula')
                 abono_entontrado = True
                 #plaza_encontrada = False
                 for j in parking.plazas:
-                    # if(not plaza_encontrada and
-                    # j.tipo == i.cliente.vehiculo.tipo and
-                    # not j.ocupada and j.abonada):
                     if (not plaza_encontrada and
                             ((j.tipo == 'coche' and isinstance(i.cliente.vehiculo, Coche)) or
                              (j.tipo == 'moto' and isinstance(i.cliente.vehiculo, Moto)) or
                              (j.tipo == 'pmr' and isinstance(i.cliente.vehiculo, Vehiculo_pmr))) and
                             not j.ocupada and j.abonada):
-                        print('Ha encontrado plaza de ese tipo de vehiculo que no está ocupada y está abonada')
+                        #print('Ha encontrado plaza de ese tipo de vehiculo que no está ocupada y está abonada')
                         plaza_encontrada = True
                         j.ocupada = True
                         i.plaza_ocupada = True
                         print('Vehiculo depositado en plaza abonada.')
         if(not abono_entontrado):
-            print('No hay abono con esos datos')
+            #print('No hay abono con esos datos')
+            raise No_Abono_Especificado
         elif(not plaza_encontrada):
-            print('No hay plaza que coincida con su abono')
+            #print('No hay plaza que coincida con su abono')
+            raise No_Plaza_Abono_Especificado
         abono_repositorio.guardar()
+
     def retirar_abonado(self,
                         dni,
-                        matricula,
                         parking,
                         abono_repositorio):
         abono_encontrado = False
@@ -138,4 +140,8 @@ class Cliente_Servicio:
                         plaza_encontrada = True
                         j.ocupada = False
                         i.plaza_ocupada = False
+                    else:
+                        raise No_Plaza_Abonada_Ocupada_Con_Dni_Especificado
+            else:
+                raise No_Plaza_Abonada_Ocupada_Con_Dni_Especificado
         abono_repositorio.guardar()

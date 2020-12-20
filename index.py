@@ -20,18 +20,7 @@ ticket_repositorio = Ticket_Repositorio()
 cobro_repositorio = Cobro_Repositorio()
 abono_repositorio = Abono_Repositorio()
 
-try:
-    ticket_repositorio.cargar()
-except EOFError:
-    print('No hay tickets en DB.')
-try:
-    abono_repositorio.cargar()
-except EOFError:
-    print('No hay abonos en DB.')
-try:
-    cobro_repositorio.cargar()
-except EOFError:
-    print('No hay cobros en DB.')
+
 
 #Instanciacion servicios
 cliente_servicio = Cliente_Servicio()
@@ -42,26 +31,51 @@ vista_parking = Vista_Parking()
 vista_cliente = Vista_Cliente()
 vista_general = Vista_General()
 
-#Calculo del numero de plazas de cda tipo
-n_plazas_totales = int(input('¿Cuántas plazas tendrá el parking?'))
-n_plazas_coche = math.ceil(n_plazas_totales / 100 * 70)
-n_plazas_moto = math.floor(n_plazas_totales / 100 * 15)
-n_plazas_pmr = math.floor(n_plazas_totales / 100 * 15)
-print('Plazas coche',n_plazas_coche)
-print('Plazas moto',n_plazas_moto)
-print('Plazas pmr',n_plazas_pmr)
+no_plazas = False
+cargar = input('Desea usar datosde la sesión anterior.(S/N)').upper()
+if(cargar == 'S'):
+    try:
+        ticket_repositorio.cargar()
+    except EOFError:
+        print('No hay tickets en DB.')
+    try:
+            abono_repositorio.cargar()
+    except EOFError:
+        print('No hay abonos en DB.')
+    try:
+        cobro_repositorio.cargar()
+    except EOFError:
+        print('No hay cobros en DB.')
+    try:
+        parking = Parking('Parking centro',[])
+        parking.cargar()
+    except EOFError:
+        print('No hay plazas en DB.')
+        no_plazas = True
 
-#Creo el array de plazas
-plazas = []
-for i in range(0,n_plazas_coche):
-    plazas.append(Plaza(i,False,False,'coche'))
-for i in range(0,n_plazas_moto):
-    plazas.append(Plaza((i+n_plazas_coche),False,False,'moto'))
-for i in range(0,n_plazas_pmr):
-    plazas.append(Plaza((i+n_plazas_coche+n_plazas_moto),False,False,'pmr'))
+if(cargar == 'N' or no_plazas):
+    #Calculo del numero de plazas de cda tipo
+    n_plazas_totales = int(input('¿Cuántas plazas tendrá el parking?'))
+    n_plazas_coche = math.ceil(n_plazas_totales / 100 * 70)
+    n_plazas_moto = math.floor(n_plazas_totales / 100 * 15)
+    n_plazas_pmr = math.floor(n_plazas_totales / 100 * 15)
+    print('Plazas coche',n_plazas_coche)
+    print('Plazas moto',n_plazas_moto)
+    print('Plazas pmr',n_plazas_pmr)
 
-#Instancio el parking y le anyado el array de plazas
-parking = Parking('Parking centro',plazas)
+    #Creo el array de plazas
+    plazas = []
+    for i in range(0,n_plazas_coche):
+        plazas.append(Plaza(i,False,False,'coche'))
+    for i in range(0,n_plazas_moto):
+        plazas.append(Plaza((i+n_plazas_coche),False,False,'moto'))
+    for i in range(0,n_plazas_pmr):
+        plazas.append(Plaza((i+n_plazas_coche+n_plazas_moto),False,False,'pmr'))
+
+    #Instancio el parking y le anyado el array de plazas
+    parking = Parking('Parking centro',plazas)
+    parking.guardar()
+
 
 # for i in parking.plazas:
 #     print(i.tipo)
@@ -115,6 +129,7 @@ while not salir:
                         print('-'*50)
                         print('Dar alta a un abono')
                         parking_servicio.dar_alta_abono(parking, vista_parking, abono_repositorio)
+                        parking.guardar()
                         print('-'*50)
                     elif(opcion == 3):
                         print('-'*50)
@@ -175,6 +190,7 @@ while not salir:
             elif(tipo_v == 'pmr'):
                 vehiculo = Vehiculo_pmr(matricula)
             cliente_servicio.depositarVehiculo(vehiculo, parking, vista_cliente, ticket_repositorio)
+            parking.guardar()
             print('-'*50)
         elif(opcion == 2):
             print('-'*50)
@@ -183,6 +199,7 @@ while not salir:
             pin = int(input(vista_cliente.pedirPinRetirarVehiculo()))
             cliente_servicio.retirarVehiculo(matricula,pin,ticket_repositorio,
                                              vista_cliente,parking,cobro_repositorio)
+            parking.guardar()
             print('-'*50)
         elif(opcion == 3):
             print('-'*50)
@@ -190,6 +207,7 @@ while not salir:
             dni = input(vista_cliente.pedirDni())
             matricula = input(vista_cliente.pedirMatricula())
             cliente_servicio.depositar_abonado(dni, matricula,parking,abono_repositorio)
+            parking.guardar()
             print('-'*50)
         elif(opcion == 4):
             print('-'*50)
@@ -197,6 +215,7 @@ while not salir:
             dni = input(vista_cliente.pedirDni())
             matricula = input (vista_cliente.pedirMatriculaRetirarVehiculo())
             cliente_servicio.retirar_abonado(dni,matricula,parking,abono_repositorio)
+            parking.guardar()
             print('-'*50)
         elif(opcion == 0):
             print('-'*50)

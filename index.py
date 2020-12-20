@@ -14,13 +14,18 @@ from vistas.vista_parking import Vista_Parking
 from vistas.vista_cliente import Vista_Cliente
 from vistas.vista_general import Vista_General
 import math
+from excepciones.Matricula_Erronea import Matricula_Erronea
+from excepciones.Plaza_no_encontrada import Plaza_no_encontrada
+from excepciones.No_Ticket import No_Ticket
+from excepciones.Pin_Erroneo import Pin_Erroneo
+from excepciones.No_Abono_Especificado import No_Abono_Especificado
+from excepciones.No_Plaza_Abono_Especificado import No_Plaza_Abono_Especificado
+from excepciones.No_Plaza_Abonada_Ocupada_Con_Dni_Especificado import No_Plaza_Abonada_Ocupada_Con_Dni_Especificado
 
 #Instanciacion repositorios
 ticket_repositorio = Ticket_Repositorio()
 cobro_repositorio = Cobro_Repositorio()
 abono_repositorio = Abono_Repositorio()
-
-
 
 #Instanciacion servicios
 cliente_servicio = Cliente_Servicio()
@@ -189,7 +194,11 @@ while not salir:
                 vehiculo = Moto(matricula)
             elif(tipo_v == 'pmr'):
                 vehiculo = Vehiculo_pmr(matricula)
-            cliente_servicio.depositarVehiculo(vehiculo, parking, vista_cliente, ticket_repositorio)
+            try:
+                cliente_servicio.depositarVehiculo(vehiculo, parking, vista_cliente, ticket_repositorio)
+            except Plaza_no_encontrada as error:
+                print(type(error))
+                print(error.mensaje)
             parking.guardar()
             print('-'*50)
         elif(opcion == 2):
@@ -197,8 +206,12 @@ while not salir:
             print('Retirar vehiculo')
             matricula = input(vista_cliente.pedirMatriculaRetirarVehiculo())
             pin = int(input(vista_cliente.pedirPinRetirarVehiculo()))
-            cliente_servicio.retirarVehiculo(matricula,pin,ticket_repositorio,
+            try:
+                cliente_servicio.retirarVehiculo(matricula,pin,ticket_repositorio,
                                              vista_cliente,parking,cobro_repositorio)
+            except (Pin_Erroneo, Matricula_Erronea, No_Ticket, Plaza_no_encontrada) as error:
+                print(type(error))
+                print(error.mensaje)
             parking.guardar()
             print('-'*50)
         elif(opcion == 3):
@@ -206,15 +219,22 @@ while not salir:
             print('Depositar abonados')
             dni = input(vista_cliente.pedirDni())
             matricula = input(vista_cliente.pedirMatricula())
-            cliente_servicio.depositar_abonado(dni, matricula,parking,abono_repositorio)
+            try:
+                cliente_servicio.depositar_abonado(dni, matricula,parking,abono_repositorio)
+            except (No_Plaza_Abono_Especificado, No_Abono_Especificado) as error:
+                print(type(error))
+                print(error.mensaje)
             parking.guardar()
             print('-'*50)
         elif(opcion == 4):
             print('-'*50)
             print('Retirar abonado')
             dni = input(vista_cliente.pedirDni())
-            matricula = input (vista_cliente.pedirMatriculaRetirarVehiculo())
-            cliente_servicio.retirar_abonado(dni,matricula,parking,abono_repositorio)
+            try:
+                cliente_servicio.retirar_abonado(dni,parking,abono_repositorio)
+            except No_Plaza_Abonada_Ocupada_Con_Dni_Especificado as error:
+                print(type(error))
+                print(error.mensaje)
             parking.guardar()
             print('-'*50)
         elif(opcion == 0):

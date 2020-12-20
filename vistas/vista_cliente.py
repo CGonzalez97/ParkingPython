@@ -16,7 +16,6 @@ class Vista_Cliente():
     def pedirTipoVehiculoDepositar(self):
         return 'Inserte el tipo de vehiculo, coche, moto, pmr.'
 
-
     def pedirMatriculaRetirarVehiculo(self):
         return 'Inserte la matrícula del vehículo a retirar.'
 

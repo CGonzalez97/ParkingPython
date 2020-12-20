@@ -21,6 +21,15 @@ from excepciones.Pin_Erroneo import Pin_Erroneo
 from excepciones.No_Abono_Especificado import No_Abono_Especificado
 from excepciones.No_Plaza_Abono_Especificado import No_Plaza_Abono_Especificado
 from excepciones.No_Plaza_Abonada_Ocupada_Con_Dni_Especificado import No_Plaza_Abonada_Ocupada_Con_Dni_Especificado
+from excepciones.No_Cobros import No_Cobros
+from excepciones.No_Cobros_Periodo_Especificado import No_Cobros_Periodo_Especificado
+from excepciones.No_Abonos_Anuales import No_Abonos_Anuales
+from excepciones.No_Hay_Abonos import No_Hay_Abonos
+from excepciones.Tipo_Vehiculo_Inexistente import Tipo_Vehiculo_Inexistente
+from excepciones.No_Plaza_Libre_Para_Abonar import No_Plaza_Disponible_Para_Abonar
+from excepciones.No_Caducan_Abonos_Este_Mes import No_Caduca_Abonos_Este_Mes
+from excepciones.No_Caducan_Abonos_En_Diez_Dias import No_Caducan_Abonos_En_Diez_Dias
+from excepciones.No_Hay_Abonos_Vigentes import No_Hay_Abonos_Vigentes
 
 #Instanciacion repositorios
 ticket_repositorio = Ticket_Repositorio()
@@ -112,12 +121,18 @@ while not salir:
                 #print('Facturación')
                 print('-'*50)
                 #print(parking_servicio.facturar(vista_parking, cobro_repositorio),'€')
-                print("{0:.2f}€".format(parking_servicio.facturar(vista_parking, cobro_repositorio)))
+                try:
+                    print("{0:.2f}€".format(parking_servicio.facturar(vista_parking, cobro_repositorio)))
+                except (No_Cobros, No_Cobros_Periodo_Especificado) as error:
+                    print(error.mensaje)
                 print('-'*50)
             elif(opcion == 3):
                 print('-'*50)
                 print('Consulta de abonados')
-                parking_servicio.consultar_abonados(abono_repositorio.lista_abonos)
+                try:
+                    parking_servicio.consultar_abonados(abono_repositorio.lista_abonos)
+                except No_Abonos_Anuales as error:
+                    print(error.mensaje)
                 print('-'*50)
             elif(opcion == 4):
                 salir_submenu_abonos = False
@@ -128,12 +143,18 @@ while not salir:
                     if(opcion == 1):
                         #print('Mostrar abonos')
                         print('-'*50)
-                        parking_servicio.mostrar_abonos(abono_repositorio.lista_abonos)
+                        try:
+                            parking_servicio.mostrar_abonos(abono_repositorio.lista_abonos)
+                        except No_Hay_Abonos as  error:
+                            print(error.mensaje)
                         print('-'*50)
                     elif(opcion == 2):
                         print('-'*50)
                         print('Dar alta a un abono')
-                        parking_servicio.dar_alta_abono(parking, vista_parking, abono_repositorio)
+                        try:
+                            parking_servicio.dar_alta_abono(parking, vista_parking, abono_repositorio)
+                        except (No_Plaza_Disponible_Para_Abonar, Tipo_Vehiculo_Inexistente) as error:
+                            print(error.mensaje)
                         parking.guardar()
                         print('-'*50)
                     elif(opcion == 3):
@@ -145,30 +166,48 @@ while not salir:
                             nombre_nuevo = input(vista_parking.introducir_nombre_modificar())
                             dni_nuevo = input(vista_parking.introducir_dni_modificar())
                             matricula_nueva = input(vista_parking.introducir_matricula_modificar())
-                            parking_servicio.modificar_abono(dni_abono_a_modificar,nombre_nuevo, dni_nuevo, matricula_nueva, abono_repositorio)
+                            try:
+                                parking_servicio.modificar_abono(dni_abono_a_modificar,nombre_nuevo, dni_nuevo, matricula_nueva, abono_repositorio)
+                            except No_Abono_Especificado as error:
+                                print(error.mensaje)
                         elif(opcion_modificar == 2):
-                            parking_servicio.renovar_abono(abono_repositorio,dni_abono_a_modificar)
+                            try:
+                                parking_servicio.renovar_abono(abono_repositorio,dni_abono_a_modificar)
+                            except No_Abono_Especificado as error:
+                                print(error.mensaje)
                         print('-'*50)
                     elif(opcion == 4):
                         print('-'*50)
                         print('Eliminar abono')
                         dni_eliminacion = input(vista_parking.pedir_matricula_abono_eliminar())
-                        parking_servicio.eliminar_datos_abonado(dni_eliminacion,abono_repositorio)
+                        try:
+                            parking_servicio.eliminar_datos_abonado(dni_eliminacion,abono_repositorio)
+                        except No_Abono_Especificado as error:
+                            print(error.mensaje)
                         print('-'*50)
                     elif(opcion == 5):
                         #print('Mostrar caducan este mes')
                         print('-'*50)
-                        parking_servicio.mostrar_abonos_caducan_mes(abono_repositorio.lista_abonos,vista_parking)
+                        try:
+                            parking_servicio.mostrar_abonos_caducan_mes(abono_repositorio.lista_abonos,vista_parking)
+                        except No_Caduca_Abonos_Este_Mes as error:
+                            print(error.mensaje)
                         print('-'*50)
                     elif(opcion == 6):
                         #print('Mostrar caducan diez días')
                         print('-'*50)
-                        parking_servicio.mostrar_abonos_caducan_diez(abono_repositorio.lista_abonos,vista_parking)
+                        try:
+                            parking_servicio.mostrar_abonos_caducan_diez(abono_repositorio.lista_abonos,vista_parking)
+                        except No_Caducan_Abonos_En_Diez_Dias as error:
+                            print(error.mensaje)
                         print('-'*50)
                     elif(opcion == 7):
                         print('-'*50)
                         print('Total abonos anuales')
-                        parking_servicio.calcular_anuales(abono_repositorio)
+                        try:
+                            parking_servicio.calcular_anuales(abono_repositorio)
+                        except No_Hay_Abonos_Vigentes as error:
+                            print(error.mensaje)
                         print('-'*50)
                     elif(opcion == 0):
                         print('-'*50)
@@ -197,7 +236,6 @@ while not salir:
             try:
                 cliente_servicio.depositarVehiculo(vehiculo, parking, vista_cliente, ticket_repositorio)
             except Plaza_no_encontrada as error:
-                print(type(error))
                 print(error.mensaje)
             parking.guardar()
             print('-'*50)
@@ -210,7 +248,6 @@ while not salir:
                 cliente_servicio.retirarVehiculo(matricula,pin,ticket_repositorio,
                                              vista_cliente,parking,cobro_repositorio)
             except (Pin_Erroneo, Matricula_Erronea, No_Ticket, Plaza_no_encontrada) as error:
-                print(type(error))
                 print(error.mensaje)
             parking.guardar()
             print('-'*50)
@@ -222,7 +259,6 @@ while not salir:
             try:
                 cliente_servicio.depositar_abonado(dni, matricula,parking,abono_repositorio)
             except (No_Plaza_Abono_Especificado, No_Abono_Especificado) as error:
-                print(type(error))
                 print(error.mensaje)
             parking.guardar()
             print('-'*50)
@@ -233,7 +269,6 @@ while not salir:
             try:
                 cliente_servicio.retirar_abonado(dni,parking,abono_repositorio)
             except No_Plaza_Abonada_Ocupada_Con_Dni_Especificado as error:
-                print(type(error))
                 print(error.mensaje)
             parking.guardar()
             print('-'*50)

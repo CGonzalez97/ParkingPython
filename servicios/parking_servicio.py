@@ -5,6 +5,16 @@ from datetime import timedelta
 from modelos.cliente import Cliente
 from modelos.vehiculo import Vehiculo, Coche, Moto, Vehiculo_pmr
 from modelos.abono import Abono
+from excepciones.No_Cobros import No_Cobros
+from excepciones.No_Cobros_Periodo_Especificado import No_Cobros_Periodo_Especificado
+from excepciones.No_Abonos_Anuales import No_Abonos_Anuales
+from excepciones.No_Hay_Abonos import No_Hay_Abonos
+from excepciones.Tipo_Vehiculo_Inexistente import Tipo_Vehiculo_Inexistente
+from excepciones.No_Plaza_Libre_Para_Abonar import No_Plaza_Disponible_Para_Abonar
+from excepciones.No_Caducan_Abonos_Este_Mes import No_Caduca_Abonos_Este_Mes
+from excepciones.No_Caducan_Abonos_En_Diez_Dias import No_Caducan_Abonos_En_Diez_Dias
+from excepciones.No_Hay_Abonos_Vigentes import No_Hay_Abonos_Vigentes
+from excepciones.No_Abono_Especificado import No_Abono_Especificado
 
 
 class Parking_Servicio:
@@ -108,7 +118,8 @@ class Parking_Servicio:
     def  facturar(self,vista_parking, cobro_repositorio):
         cuantia = 0
         if(len(cobro_repositorio.lista_cobros) <= 0):
-            print('No hay cobros')
+            #print('No hay cobros')
+            raise No_Cobros
         fecha_inicial = datetime(int(input(vista_parking.pedirAnyoInicial())),#anyo
                                  int(input(vista_parking.pedirMesInicial())),#mes,
                                  int(input(vista_parking.pedirDiaInicial())),#dias,
@@ -126,6 +137,8 @@ class Parking_Servicio:
             if(i.fecha_salida > fecha_inicial
             and i.fecha_salida < fecha_final):
                 cuantia += i.cobro_final
+            else:
+                raise No_Cobros_Periodo_Especificado
 
         return cuantia
 
@@ -172,6 +185,8 @@ class Parking_Servicio:
         elif(tipo_v == 'pmr'):#puede haver conflicto con el string vehiculo_pmr
             if(lista_plazas.get('libres_movilidad_reducida') > 0):
                 plaza_encontrada = True
+        else:
+            raise Tipo_Vehiculo_Inexistente
 
         if(plaza_encontrada):
             auxiliar_borrar_libre = False
@@ -201,11 +216,15 @@ class Parking_Servicio:
                 i.tipo == tipo_v):
                     i.abonada = True
                     auxiliar_borrar_libre = True
+        if(not auxiliar_borrar_libre):
+            raise No_Plaza_Disponible_Para_Abonar
         abono_repositorio.guardar()
 
     def  mostrar_abonos(self, lista_abonos):
         for i in lista_abonos:
             print(i.mostrar())
+        if(len(lista_abonos) <= 0):
+            raise No_Hay_Abonos
 
     def mostrar_abonos_caducan_mes(self, lista_abonos,
                                    vista_parking):
@@ -220,7 +239,8 @@ class Parking_Servicio:
                 if(ninguno):
                     ninguno = False
         if(ninguno):
-            print(vista_parking.mostrarSinCAducidadEsteMes())
+            #print(vista_parking.mostrarSinCAducidadEsteMes())
+            raise No_Caduca_Abonos_Este_Mes
 
     def mostrar_abonos_caducan_diez(self,lista_abonos,vista_parking):
         vista_parking.mostrarMensajesAbonoasACaducarDiezDias()
@@ -234,7 +254,8 @@ class Parking_Servicio:
                 if(ninguno):
                     ninguno = False
         if(ninguno):
-            print(vista_parking.mostrarSinCAducidadCercana())
+            #print(vista_parking.mostrarSinCAducidadCercana())
+            raise No_Caducan_Abonos_En_Diez_Dias
 
     def calcular_anuales(self, abono_repositorio):
         contador = 0
@@ -248,16 +269,21 @@ class Parking_Servicio:
             print(f'Hay en vigor {contador} abonos anuales,'
                   f'sumando un total de {cuantia}€.')
         else:
-            print('No hhay abonos anuales vigentes.')
+            #print('No hay abonos anuales vigentes.')
+            raise No_Hay_Abonos_Vigentes
 
     #Consultar abonados
     def consultar_abonados(self, lista_abonos):
+        alguno = False
         for i in lista_abonos:
             print(type(i))
             if(i.plazo == 'anual'):
                 print('-'*50)
                 print(i.mostrar())
                 print('-'*50)
+                alguno = True
+        if(not alguno):
+            raise No_Abonos_Anuales
 
     #Eliminar abono
     def eliminar_datos_abonado(self, dni, abono_repositorio):
@@ -270,7 +296,8 @@ class Parking_Servicio:
                 encontrado = True
                 print('Eliminacion con éxito.')
         if(not encontrado):
-            print('No hay ningun abonado con ese dni')
+            #print('No hay ningun abonado con ese dni')
+            raise No_Abono_Especificado
         abono_repositorio.guardar()
 
     def modificar_abono(self, dni, nombre_n, dni_n, matricula_n, abono_repositorio):
@@ -286,7 +313,8 @@ class Parking_Servicio:
                 encontrado = True
                 print('Eliminacion con éxito.')
         if(not encontrado):
-            print('No hay ningun abonado con ese dni')
+            #print('No hay ningun abonado con ese dni')
+            raise No_Abono_Especificado
         abono_repositorio.guardar()
 
     def renovar_abono(self, abono_repositorio, dni):
@@ -303,6 +331,8 @@ class Parking_Servicio:
                     i.fecha_cancelacion += timedelta(days=360)
                 encontrado = True
                 print('Renovado con éxito.')
+        if(not encontrado):
+            raise No_Abono_Especificado
         abono_repositorio.guardar()
 
 

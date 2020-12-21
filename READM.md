@@ -1,4 +1,4 @@
-#Carlos González Lozano - Proyecto parking con python  
+# Carlos González Lozano - Proyecto parking con python  
 
 El programa se ejecutará dentro del archivo index.py.  
 Consta de persistencia y concurrencia con hilos. Esto último no es del todo necesario ya que despues de modificar algún repositorio se hace un guardado,  
@@ -9,9 +9,9 @@ Las excepciones personalizadas, las lanzan los métodos de los servicios y se ca
 La persistencia se implementa mediante dos métodos en cada repositorio, cargar() y guardar(). Los datos se guardarán en el fichero .pckl que le corresponda al repositorio,  
 dichos ficheros se encuentran en la carpeta persistencia.  
 
-##Servicios  
+## Servicios  
 
-###ClienteServicio  
+### ClienteServicio  
 
 Este servicio manejará las funciones que se ejecutarán desde el menú de cliente. Son:  
 
@@ -25,7 +25,7 @@ además de generar el ticket.
 -retirar_abonado():Modifica el atributo plaza_ocupada del abono, y ocupada de la plaza, tras pedir el dni del abonado y hacer las comprobaciones necesarias. 
 
 
-###ParkingServicio
+### ParkingServicio
 
 Este servicio manejará las acciones del menú parking.  
 

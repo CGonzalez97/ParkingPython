@@ -10,6 +10,8 @@ import pytesseract
 #Además hay que añadirlo con pip install pytesseract
 #Mi ruta del binario: C:\Users\gonzalez.locar20\AppData\Local\Programs\Tesseract-OCR
 #Tambien hay que ayadir la ruta de la carpeta tessdata a la variable de entorno TESSDATA_PREFIX
+#https://stackoverflow.com/questions/46567157/pytesseract-image-to-string-returns-windows-error-access-denied-error-in-python
+
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Users\gonzalez.locar20\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
 

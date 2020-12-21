@@ -1,5 +1,5 @@
-class Cliente:
-    def __int__(self,dni, nombre, nTarjeta, vehiculo):
+class Cliente():
+    def __init__(self,dni, nombre, nTarjeta, vehiculo):
         self.__dni = dni
         self.__nombre = nombre
         self.__ntarjeta = nTarjeta
